@@ -182,18 +182,22 @@ export const TEAM: {
   name: string;
   role: string;
   linkedin: string;
+  /** Short third-person bio shown on /about and used as the Person description. */
+  bio: string;
   founder?: boolean;
 }[] = [
   {
     name: "Vansh Modi",
     role: "Founder",
     linkedin: "https://www.linkedin.com/in/vansh-modi-motion8/",
+    bio: "Vansh Modi founded Motion 8 Agency to be the single execution partner growing companies usually can’t find. Most businesses have the vision but end up managing separate vendors for software, AI and marketing. Motion 8 brings those under one accountable team. Vansh leads specialists across software and blockchain engineering, AI and workflow automation, and digital marketing and branding, working with brands in the US, UK, Europe, Australia and the Middle East. He also founded Capital Corridor, which helps companies secure grants, angel investment and venture funding.",
     founder: true,
   },
   {
     name: "James deCrescenzo",
     role: "Partner and Consultant",
     linkedin: "https://www.linkedin.com/in/jamesdjr/",
+    bio: "James deCrescenzo brings more than 25 years of leadership in application design, IT architecture, product management and cybersecurity. He has built data centres, led cloud migrations and large application modernisation programmes, and built and led teams of more than 80 people. His work spans fintech and banking, healthcare, e-commerce, government, telecoms, insurance and private equity. At Motion 8 Agency, he advises clients on product strategy, cloud architecture and security, and his approach is simple: if you can think it, he can build it.",
   },
 ];
 

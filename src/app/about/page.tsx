@@ -101,7 +101,10 @@ export default function AboutPage() {
                     <h3 className="m-0 text-[22px] font-extrabold tracking-[-0.02em] text-light-body">
                       {member.name}
                     </h3>
-                    <p className="m-0 mt-1.5 text-[15px] text-light-muted">{member.role}</p>
+                    <p className="m-0 mt-1.5 text-[13px] font-extrabold uppercase tracking-[.14em] text-terracotta-dark">
+                      {member.role}
+                    </p>
+                    <p className="m-0 mt-5 text-[15px] leading-[1.75] text-light-muted">{member.bio}</p>
                   </div>
                   <a
                     href={member.linkedin}

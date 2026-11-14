@@ -107,6 +107,7 @@ export const teamSchemas = (): Json[] =>
     "@id": personId(m.name),
     name: m.name,
     jobTitle: m.role,
+    description: m.bio,
     url: `${SITE.url}/about`,
     sameAs: [m.linkedin],
     worksFor: { "@id": ORG_ID },
