@@ -13,7 +13,7 @@ const crumbs = [
 ];
 
 export const metadata = buildMetadata({
-  title: "Contact Motion 8 | Start a Project",
+  title: "Contact Motion 8 Agency | Start a Project",
   description:
     "Tell us where growth is stuck. We reply within 24 hours with a first read on what we would fix — not a pitch deck.",
   path: "/contact",
@@ -30,7 +30,7 @@ export default function ContactPage() {
           crumbs={crumbs}
           eyebrow="Start a project"
           heading="Tell us where it's stuck."
-          lede="We reply within 24 hours, usually with a first read on what we would fix rather than a calendar link. No pitch deck until there's something worth pitching."
+          lede="We reply within 24 hours with a first read on what we would fix, and you can book a 30-minute call as soon as you send your brief. No pitch deck until there's something worth pitching."
           primary={{ label: "hello@motion8agency.co", href: `mailto:${SITE.email}` }}
           secondary={{ label: "See our work", href: "/our-work" }}
         />
