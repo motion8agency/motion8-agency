@@ -51,6 +51,7 @@ const EMPTY: Values = {
 };
 
 const DRAFT_KEY = "m8-contact-draft-v1";
+const DRAFT_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const STEPS: { title: string; fields: (keyof Values)[] }[] = [
@@ -203,7 +204,14 @@ export function ContactForm({
     try {
       const raw = localStorage.getItem(DRAFT_KEY);
       const parsed: unknown = raw ? JSON.parse(raw) : null;
-      if (parsed && typeof parsed === "object") draft = parsed as Record<string, unknown>;
+      const saved = parsed as { savedAt?: unknown; values?: unknown } | null;
+      const fresh =
+        saved && typeof saved.savedAt === "number" && Date.now() - saved.savedAt < DRAFT_MAX_AGE_MS;
+      if (fresh && saved.values && typeof saved.values === "object") {
+        draft = saved.values as Record<string, unknown>;
+      } else if (raw) {
+        localStorage.removeItem(DRAFT_KEY);
+      }
     } catch {
       /* ignore */
     }
@@ -240,7 +248,11 @@ export function ContactForm({
     if (!hydrated || status === "sent") return;
     const id = window.setTimeout(() => {
       try {
-        localStorage.setItem(DRAFT_KEY, JSON.stringify(values));
+        // Contact details (email, phone) are never stored on the device.
+        const { email: _email, phone: _phone, ...safe } = values;
+        void _email;
+        void _phone;
+        localStorage.setItem(DRAFT_KEY, JSON.stringify({ savedAt: Date.now(), values: safe }));
       } catch {
         /* ignore */
       }

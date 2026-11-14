@@ -170,6 +170,12 @@ async function sendAutoReply(to: string, serviceNames: string[], budget: string,
   }
 }
 
+/** One key per real inbox: lowercased, with any "+tag" removed from the local part. */
+function inboxKey(email: string) {
+  const [local, domain = ""] = email.toLowerCase().split("@");
+  return `${local.split("+")[0]}@${domain}`;
+}
+
 export async function POST(request: Request) {
   // Vercel sets x-real-ip; the first x-forwarded-for hop is client-controlled.
   const ip =
@@ -217,7 +223,7 @@ async function legacy(body: Record<string, unknown>) {
   }
 
   // Per-recipient cap, checked only once the address is valid so typos don't burn quota.
-  if (limited(emailHits, email.toLowerCase(), EMAIL_WINDOW_MS, EMAIL_MAX)) {
+  if (limited(emailHits, inboxKey(email), EMAIL_WINDOW_MS, EMAIL_MAX)) {
     return TOO_MANY("in a few minutes");
   }
 
@@ -311,7 +317,7 @@ async function enquiry(body: Record<string, unknown>) {
   }
 
   // Per-recipient cap, checked only once the address is valid so typos don't burn quota.
-  if (limited(emailHits, email.toLowerCase(), EMAIL_WINDOW_MS, EMAIL_MAX)) {
+  if (limited(emailHits, inboxKey(email), EMAIL_WINDOW_MS, EMAIL_MAX)) {
     return TOO_MANY("in a few minutes");
   }
 
