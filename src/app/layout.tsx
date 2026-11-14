@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { LeadSourceCapture } from "@/components/contact/LeadSourceCapture";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { SITE } from "@/content/site";
 import { absolute } from "@/lib/seo";
@@ -122,6 +123,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <SmoothScroll />
         <ScrollProgress />
+        <LeadSourceCapture />
         {children}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-PDL1Y3N3SV"

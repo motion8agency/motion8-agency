@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { Nav } from "@/components/Nav";
 import { PageHero } from "@/components/PageHero";
+import { SERVICE_GROUPS } from "@/content/contact-services";
 import { SITE } from "@/content/site";
 import { breadcrumbSchema, buildMetadata } from "@/lib/seo";
 
@@ -35,7 +36,7 @@ export default function ContactPage() {
         />
 
         <section className="gutter bg-ground pb-20 md:pb-28">
-          <div className="grid gap-12 md:grid-cols-[340px_1fr] md:gap-14">
+          <div className="grid gap-12 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] md:gap-14 lg:grid-cols-[340px_minmax(0,1fr)]">
             <div>
               <h2 className="text-[clamp(22px,3vw,28px)] leading-[1.25] tracking-[-0.02em] text-white">
                 Ready to build your growth infrastructure?
@@ -67,7 +68,7 @@ export default function ContactPage() {
               </dl>
             </div>
 
-            <ContactForm />
+            <ContactForm groups={SERVICE_GROUPS} calendlyUrl={SITE.calendlyUrl} email={SITE.email} />
           </div>
         </section>
       </main>

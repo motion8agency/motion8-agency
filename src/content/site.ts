@@ -17,6 +17,8 @@ export const SITE = {
   email: "hello@motion8agency.co",
   founded: "2024",
   offices: "USA · UAE · India",
+  /** Calendly (or similar) booking URL shown after a contact-form submit. Empty hides it. */
+  calendlyUrl: "https://calendly.com/vansh-motion8agency-l2hd/30min",
   /* ISO codes for Organization schema areaServed */
   areaServed: ["US", "CA", "GB", "AU", "NZ", "IN", "AE"],
   tagline: "Growth infrastructure — every stage, every size",

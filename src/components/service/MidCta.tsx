@@ -9,10 +9,13 @@ import { MagneticButton } from "@/components/MagneticButton";
 export function MidCta({
   text,
   dark = false,
+  href = "/contact",
   className = "mt-12 md:mt-16",
 }: {
   text: string;
   dark?: boolean;
+  /** Primary CTA target, e.g. `/contact?service=<slug>` to prefill the form. */
+  href?: string;
   className?: string;
 }) {
   return (
@@ -29,7 +32,7 @@ export function MidCta({
         {text}
       </p>
       <div className="flex shrink-0 flex-wrap items-center gap-x-7 gap-y-4">
-        <MagneticButton href="/contact" variant="primary">
+        <MagneticButton href={href} variant="primary">
           Start a Project
         </MagneticButton>
         <Link

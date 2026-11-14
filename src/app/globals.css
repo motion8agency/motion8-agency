@@ -260,3 +260,18 @@ html:not(.skip-intro) .home-hero {
 }
 
 
+
+/* Custom chevron for native selects on dark grounds (contact form). */
+.select-chevron {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%23bdb0a2' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px 8px;
+  padding-right: 38px;
+}
+.select-chevron option {
+  background: #1b130d;
+  color: #fff;
+}

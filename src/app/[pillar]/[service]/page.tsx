@@ -36,7 +36,15 @@ const EYEBROW_DARK = `${EYEBROW} text-terracotta-light`;
 const SECTION = "gutter scroll-mt-36 py-16 md:py-24";
 
 /** Mid-page prompt: a sentence, the primary CTA and a quieter link. Not a heading. */
-function MidCta({ text, dark = false }: { text: string; dark?: boolean }) {
+function MidCta({
+  text,
+  dark = false,
+  href = "/contact",
+}: {
+  text: string;
+  dark?: boolean;
+  href?: string;
+}) {
   return (
     <div
       className={`mt-12 flex flex-col items-start gap-6 border-t pt-8 md:mt-16 md:flex-row md:items-center md:justify-between md:gap-10 ${
@@ -51,7 +59,7 @@ function MidCta({ text, dark = false }: { text: string; dark?: boolean }) {
         {text}
       </p>
       <div className="flex shrink-0 flex-wrap items-center gap-x-7 gap-y-4">
-        <MagneticButton href="/contact" variant="primary">
+        <MagneticButton href={href} variant="primary">
           Start a Project
         </MagneticButton>
         <Link
@@ -109,6 +117,7 @@ export default async function ServicePage({ params }: Params) {
   if (!pillar || !service) notFound();
 
   const path = `/${pillar.slug}/${service.slug}`;
+  const contactHref = `/contact?service=${encodeURIComponent(service.slug)}`;
   const crumbs = [
     { name: "Home", path: "/" },
     { name: pillar.shortName, path: `/${pillar.slug}` },
@@ -168,6 +177,7 @@ export default async function ServicePage({ params }: Params) {
           heading={detail?.h1 ?? service.h1}
           subheading={detail?.tagline}
           lede={service.lede}
+          primary={{ label: "Start a Project", href: contactHref }}
           motif={<PillarMotif pillar={pillar.slug} />}
         />
 
@@ -234,7 +244,7 @@ export default async function ServicePage({ params }: Params) {
               </div>
             </div>
 
-            <MidCta text="Sounds like you? Tell us what you're building and get a first read within 24 hours." />
+            <MidCta href={contactHref} text="Sounds like you? Tell us what you're building and get a first read within 24 hours." />
           </Reveal>
         )}
 
@@ -429,7 +439,7 @@ export default async function ServicePage({ params }: Params) {
                 </div>
               </div>
 
-              <MidCta dark text="Want a scoped timeline for your project?" />
+              <MidCta dark href={contactHref} text="Want a scoped timeline for your project?" />
             </section>
 
             {/* Overview */}
@@ -560,7 +570,7 @@ export default async function ServicePage({ params }: Params) {
           heading="Want the audit before the pitch?"
           body={CTA_BAND.body}
           ctaLabel={CTA_BAND.cta.label}
-          ctaHref={CTA_BAND.cta.href}
+          ctaHref={contactHref}
         />
       </main>
 
