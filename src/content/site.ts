@@ -203,6 +203,15 @@ export const TEAM: {
   },
 ];
 
+/**
+ * Third-party profiles (review sites, directories) that belong to the
+ * company. Emitted in Organization `sameAs` only — not shown as footer icons.
+ * Add each new profile here as it goes live.
+ */
+export const DIRECTORY_PROFILES: { label: string; href: string }[] = [
+  { label: "Clutch", href: "https://clutch.co/profile/motion-8-agency-0" },
+];
+
 export const FOOTER_COLUMNS: { label: string; href: string }[][] = [
   [
     { label: "Home", href: "/" },

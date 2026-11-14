@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SITE, SOCIALS, TEAM } from "@/content/site";
+import { DIRECTORY_PROFILES, SITE, SOCIALS, TEAM } from "@/content/site";
 import { PILLARS } from "@/content/pillars";
 
 export const absolute = (path: string) =>
@@ -114,7 +114,7 @@ export const teamSchemas = (): Json[] =>
   }));
 
 export const organizationSchema = (): Json => {
-  const sameAs = SOCIALS.map((s) => s.href.trim()).filter(Boolean);
+  const sameAs = [...SOCIALS, ...DIRECTORY_PROFILES].map((s) => s.href.trim()).filter(Boolean);
   const knowsAbout = uniq([
     "Growth infrastructure",
     ...PILLARS.map((p) => p.name),
