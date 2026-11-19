@@ -170,6 +170,29 @@ async function sendAutoReply(to: string, serviceNames: string[], budget: string,
   }
 }
 
+/**
+ * Also hand the lead to Founder OS (Motion 8's CRM), so it becomes a contact and deal there and the
+ * team is alerted. Best effort: the visitor's message is already safely emailed, so a hiccup here is
+ * only logged and never shown to them. Switched on by OS_FORM_URL (the form address from
+ * Founder OS → CRM → Website forms); without it nothing changes.
+ */
+async function forwardToOS(fields: Record<string, string | undefined>) {
+  const url = process.env.OS_FORM_URL;
+  if (!url) return;
+  const clean = Object.fromEntries(Object.entries(fields).filter(([, v]) => v && v.trim()));
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json", Origin: SITE.url.replace(/\/$/, "") },
+      body: JSON.stringify(clean),
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!response.ok) console.error("[contact] Founder OS refused the lead:", response.status, await response.text());
+  } catch (error) {
+    console.error("[contact] Founder OS unreachable:", error);
+  }
+}
+
 /** One key per real inbox: lowercased, with any "+tag" removed from the local part. */
 function inboxKey(email: string) {
   const [local, domain = ""] = email.toLowerCase().split("@");
@@ -246,7 +269,17 @@ async function legacy(body: Record<string, unknown>) {
     text,
     email,
   );
-  return failed ?? NextResponse.json({ ok: true, delivered: true });
+  if (failed) return failed;
+  await forwardToOS({
+    name,
+    email,
+    company,
+    website: socialOrWebsite,
+    "Price range": budget,
+    message,
+    source: "Website contact form",
+  });
+  return NextResponse.json({ ok: true, delivered: true });
 }
 
 /** The multi-step contact form. */
@@ -372,6 +405,22 @@ async function enquiry(body: Record<string, unknown>) {
 
   const failed = await deliverLead(lead, subject, text, email);
   if (failed) return failed;
+
+  await forwardToOS({
+    name,
+    email,
+    company,
+    phone,
+    website: url,
+    service: serviceNames.join(", "),
+    "Price range": budget,
+    Timeline: timeline,
+    "Preferred contact": prefLabel,
+    message,
+    source: source.utm_source ? `Website · ${source.utm_source}${source.utm_campaign ? ` / ${source.utm_campaign}` : ""}` : "Website contact form",
+    "Landing page": source.landingPage,
+    Referrer: source.referrer,
+  });
 
   // Only after the lead is safely with us; never for spam (returned earlier).
   await sendAutoReply(
